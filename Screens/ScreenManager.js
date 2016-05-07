@@ -31,8 +31,7 @@ function create() {
     cursors = game.input.keyboard.createCursorKeys();
     
     map = game.add.tilemap('introLevel');
-
-    
+  
     map.addTilesetImage('tilesheet_complete', 'tiles');
     
     layer = map.createLayer('Background');
@@ -43,6 +42,18 @@ function create() {
     
     layer.resizeWorld();
     
+    player = game.add.sprite(150, 200, 'player');
+    game.physics.arcade.enable(player);
+    
+    player.body.bounce.y = 0.2;
+    player.body.gravity.y = 400;
+    player.body.collideWorldBounds = true;
+    
+    game.physics.enable(player, Phaser.Physics.ARCADE);
+
+    game.camera.follow(player);
+    
+    cursors = game.input.keyboard.createCursorKeys();
     
 
 }
@@ -52,7 +63,48 @@ function create() {
 
 function update() {
 
+        game.physics.arcade.collide(player, CollideLayer);
     
+        player.body.velocity.x = 0;
+    
+    
+     if (cursors.right.isDown) {
+
+        player.body.velocity.x = 250;
+
+       // player.animations.play('right');
+    }
+
+    else if (cursors.left.isDown) {
+
+        player.body.velocity.x = -250;
+
+      //  player.animations.play('left');
+    }
+
+
+
+
+    else {
+        //  Stand still
+
+
+       // player.animations.play('stop');
+
+
+
+    }
+
+    //  Allow the player to jump if they are touching the ground.
+    if (cursors.up.isDown && player.body.onFloor()) {
+
+        player.body.velocity.y = -350;
+       // jumpsound.play();
+    }
+
+
+
+
 
 }
 
