@@ -16,7 +16,7 @@ function preload() {
     //!-- TILE MAP, PICS, AND JSON --!//
     game.load.tilemap('introLevel', 'Assets/TileMaps/introLevel.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('tiles','Assets/Tilemaps/introLevelForeground.png');
-    game.load.spritesheet('player', 'Assets/sprites.png', 45, 54);
+    game.load.spritesheet('player', 'Assets/blueStand.png', 45, 54);
     game.load.image('background2','Assets/Tilemaps/introLevelBackground_2.png');
     game.load.image('background1','Assets/Tilemaps/introLevelBackground_1.png');
 
