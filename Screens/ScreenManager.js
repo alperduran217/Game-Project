@@ -10,13 +10,15 @@ var CollideLayer;
 var tileset;
 var tile;
 var layer2;
+var layerLava;
 var key;
 var score = 100;
 var scoreString = '';
 var scoreText;
 var monster1;
 var monster2;
-var layer3;
+var monster3;
+var monster4;
 
 
 function preload() {
@@ -29,6 +31,7 @@ function preload() {
     game.load.image('background2','Assets/Tilemaps/introLevelBackground_2.png');
     game.load.image('background1','Assets/Tilemaps/introLevelBackground_1.png');
     game.load.image('key','Assets/keyGreen.png',29,30);
+    game.load.image('jew','Assets/jewel.png',24,22);
 
 
 
@@ -55,11 +58,14 @@ function create() {
     
     layer = map.createLayer('Background Colour');
     layer2 = map.createLayer('Background Pattern');
-    layer3 = map.createLayer('Lava');
+    layerLava = map.createLayer('Lava');
     
     CollideLayer = map.createLayer('Foreground');
     
     map.setCollisionBetween(0, 200, true, CollideLayer);
+    
+        map.setCollisionBetween(0, 1000, true, layerLava);
+
     
     layer.resizeWorld();
     
@@ -98,6 +104,7 @@ function create() {
     monster1.animations.play('enemy');
     game.physics.arcade.enable(monster1);
     monster1.body.collideWorldBounds = true;
+    monster1.visible = false;
 
     /////////// enemy2
 
@@ -108,8 +115,34 @@ function create() {
     monster2.animations.play('enemy');
     game.physics.arcade.enable(monster2);
     monster2.body.collideWorldBounds = true;
+    monster2.visible = false;
 
-    ///////////////
+    ///////////////enemy 3
+
+    monster3 = game.add.group();
+    monster3.enableBody = true;
+    monster3 = game.add.sprite(1792, 384, 'enemy');
+    monster3.animations.add('enemy', [1, 2, 0], 10, true);
+    monster3.animations.play('enemy');
+    game.physics.arcade.enable(monster3);
+    monster3.body.collideWorldBounds = true;
+    monster3.visible = false;
+
+
+    /////////////// enemy 4
+
+    monster4 = game.add.group();
+    monster4.enableBody = true;
+    monster4 = game.add.sprite(2880, 384, 'enemy');
+    monster4.animations.add('enemy', [1, 2, 0], 10, true);
+    monster4.animations.play('enemy');
+    game.physics.arcade.enable(monster4);
+    monster4.body.collideWorldBounds = true;
+    monster4.visible = false;
+
+
+
+    ////////////////////////
 
     
     player = game.add.sprite(150, 200, 'player');
@@ -143,6 +176,8 @@ function create() {
 
     game.add.tween(monster1).to({ y: 60 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
     game.add.tween(monster2).to({ y: 60 }, 3000, Phaser.Easing.Linear.None, true, 0, 1000, true);
+    game.add.tween(monster3).to({ y: 60 }, 4000, Phaser.Easing.Linear.None, true, 0, 1500, true);
+    game.add.tween(monster4).to({ y: 60 }, 3500, Phaser.Easing.Linear.None, true, 0, 2000, true);
 
 
 }
@@ -156,8 +191,10 @@ function update() {
     game.physics.arcade.overlap(player, key, takeKey, null, this);
     game.physics.arcade.overlap(monster1, player, monsterkill1, null, this);
     game.physics.arcade.overlap(monster2, player, monsterkill2, null, this);
+    game.physics.arcade.overlap(monster3, player, monsterkill3, null, this);
+    game.physics.arcade.overlap(monster4, player, monsterkill4, null, this);
+    game.physics.arcade.collide(player,layerLava,lavaKill,null,this);
 
-    
 
     
         player.body.velocity.x = 0;
@@ -256,6 +293,26 @@ function monsterkill1(monster1,player) {
 
 }
 function monsterkill2(monster2, player) {
+
+    player.kill();
+
+
+}
+function monsterkill3(monster3, player) {
+
+    player.kill();
+
+
+}
+function monsterkill4(monster4, player) {
+
+    player.kill();
+
+
+}
+
+
+function lavaKill(player, layerLava) {
 
     player.kill();
 
