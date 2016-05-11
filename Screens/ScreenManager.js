@@ -12,13 +12,25 @@ var tile;
 var layer2;
 var layerLava;
 var key;
-var score = 100;
+var score = 0;
 var scoreString = '';
 var scoreText;
 var monster1;
 var monster2;
 var monster3;
 var monster4;
+var gem1;
+var gem2;
+var gem3;
+var gem4;
+var gem5;
+var gem6;
+var gem7;
+var gem8;
+var gem9;
+var gem10;
+var layerGate;
+
 
 
 function preload() {
@@ -32,6 +44,7 @@ function preload() {
     game.load.image('background1','Assets/Tilemaps/introLevelBackground_1.png');
     game.load.image('key','Assets/keyGreen.png',29,30);
     game.load.image('jew','Assets/jewel.png',24,22);
+    
 
 
 
@@ -59,12 +72,18 @@ function create() {
     layer = map.createLayer('Background Colour');
     layer2 = map.createLayer('Background Pattern');
     layerLava = map.createLayer('Lava');
+    layerGate = map.createLayer('Gate');
     
     CollideLayer = map.createLayer('Foreground');
     
     map.setCollisionBetween(0, 200, true, CollideLayer);
     
-        map.setCollisionBetween(0, 1000, true, layerLava);
+    map.setCollisionBetween(0, 1000, true, layerLava);
+    
+    map.setCollisionBetween(0, 1000, true, layerGate);
+    
+    layerGate.visible = false;
+
 
     
     layer.resizeWorld();
@@ -104,7 +123,6 @@ function create() {
     monster1.animations.play('enemy');
     game.physics.arcade.enable(monster1);
     monster1.body.collideWorldBounds = true;
-    monster1.visible = false;
 
     /////////// enemy2
 
@@ -115,7 +133,6 @@ function create() {
     monster2.animations.play('enemy');
     game.physics.arcade.enable(monster2);
     monster2.body.collideWorldBounds = true;
-    monster2.visible = false;
 
     ///////////////enemy 3
 
@@ -126,7 +143,6 @@ function create() {
     monster3.animations.play('enemy');
     game.physics.arcade.enable(monster3);
     monster3.body.collideWorldBounds = true;
-    monster3.visible = false;
 
 
     /////////////// enemy 4
@@ -138,7 +154,150 @@ function create() {
     monster4.animations.play('enemy');
     game.physics.arcade.enable(monster4);
     monster4.body.collideWorldBounds = true;
-    monster4.visible = false;
+     
+    ////////////// GEM 1 
+
+    gem1 = game.add.group();
+    gem1.enableBody = true;
+
+
+    gem1 = game.add.sprite(1152,192, 'jew');
+
+
+
+
+    game.physics.arcade.enable(gem1);
+    gem1.body.collideWorldBounds = true;
+
+    ///////////////////////////////gem 2
+    gem2 = game.add.group();
+    gem2.enableBody = true;
+
+
+    gem2 = game.add.sprite(1536, 192, 'jew');
+
+
+
+
+    game.physics.arcade.enable(gem2);
+    gem2.body.collideWorldBounds = true;
+
+
+    /////////////////////////////// gem3
+
+    gem3 = game.add.group();
+    gem3.enableBody = true;
+
+
+    gem3 = game.add.sprite(1856, 192, 'jew');
+
+
+
+
+    game.physics.arcade.enable(gem3);
+    gem3.body.collideWorldBounds = true;
+
+    /////////////////////// gem 4 
+    gem4 = game.add.group();
+    gem4.enableBody = true;
+
+
+    gem4 = game.add.sprite(1984, 128, 'jew');
+
+
+
+
+    game.physics.arcade.enable(gem4);
+    gem4.body.collideWorldBounds = true;
+
+    /////////////////////// gem 5
+    gem5 = game.add.group();
+    gem5.enableBody = true;
+
+
+    gem5 = game.add.sprite(2112, 64, 'jew');
+
+
+
+
+    game.physics.arcade.enable(gem5);
+    gem5.body.collideWorldBounds = true;
+
+    /////////////////////// gem 6
+    gem6 = game.add.group();
+    gem6.enableBody = true;
+
+
+    gem6 = game.add.sprite(2368, 128, 'jew');
+
+
+
+
+    game.physics.arcade.enable(gem6);
+    gem6.body.collideWorldBounds = true;
+
+    /////////////////////// gem 7
+    gem7 = game.add.group();
+    gem7.enableBody = true;
+
+
+    gem7 = game.add.sprite(2432, 192, 'jew');
+
+
+
+
+    game.physics.arcade.enable(gem7);
+    gem7.body.collideWorldBounds = true;
+
+    /////////////////////////// gem 8
+
+
+    gem8 = game.add.group();
+    gem8.enableBody = true;
+
+
+    gem8 = game.add.sprite(2688, 256, 'jew');
+
+
+
+
+    game.physics.arcade.enable(gem8);
+    gem8.body.collideWorldBounds = true;
+
+    /////////////////////////// gem 9
+
+
+    gem9 = game.add.group();
+    gem9.enableBody = true;
+
+
+    gem9 = game.add.sprite(192,320, 'jew');
+
+
+
+
+    game.physics.arcade.enable(gem9);
+    gem9.body.collideWorldBounds = true;
+    /////////////////////////// gem 10
+
+
+    gem10 = game.add.group();
+    gem10.enableBody = true;
+
+
+    gem10 = game.add.sprite(320, 320, 'jew');
+
+
+
+
+    game.physics.arcade.enable(gem10);
+    gem10.body.collideWorldBounds = true;
+
+
+
+    //monsters2///////////////////
+   
+
 
 
 
@@ -193,7 +352,18 @@ function update() {
     game.physics.arcade.overlap(monster2, player, monsterkill2, null, this);
     game.physics.arcade.overlap(monster3, player, monsterkill3, null, this);
     game.physics.arcade.overlap(monster4, player, monsterkill4, null, this);
-    game.physics.arcade.collide(player,layerLava,lavaKill,null,this);
+    game.physics.arcade.collide(player, layerLava, lavaKill, null, this);
+    game.physics.arcade.overlap(player, gem1, takegem1, null, this);
+    game.physics.arcade.overlap(player, gem2, takegem2, null, this);
+    game.physics.arcade.overlap(player, gem3, takegem3, null, this);
+    game.physics.arcade.overlap(player, gem4, takegem4, null, this);
+    game.physics.arcade.overlap(player, gem5, takegem5, null, this);
+    game.physics.arcade.overlap(player, gem6, takegem6, null, this);
+    game.physics.arcade.overlap(player, gem7, takegem7, null, this);
+    game.physics.arcade.overlap(player, gem8, takegem8, null, this);
+    game.physics.arcade.overlap(player, gem9, takegem9, null, this);
+    game.physics.arcade.overlap(player, gem10, takegem10, null, this);
+    game.physics.arcade.collide(player, layerGate, gateFinish, null, this);
 
 
     
@@ -262,11 +432,18 @@ function update() {
     }
 
     
-    
-    if (score == 100) {
-    key.visible = true;
+         if (score == 200 ) {
+        
+        layerGate.visible = true;
+         
         
 
+    }
+
+    if (score == 100) {
+    key.visible = true;
+    
+ 
     }
     
 
@@ -279,7 +456,7 @@ function takeKey(player,key) {
     
    
     key.kill();
-    score += 10;
+    score += 100;
     scoreText.text = 'Score: ' + score;
     
     
@@ -318,3 +495,78 @@ function lavaKill(player, layerLava) {
 
 
 }
+
+function takegem1(player,gem1) {
+
+    gem1.kill();
+    score += 10;
+    scoreText.text = 'Score: ' + score;
+}
+function takegem2(player, gem2) {
+
+    gem2.kill();
+    score += 10;
+    scoreText.text = 'Score: ' + score;
+}
+function takegem3(player, gem3) {
+
+    gem3.kill();
+    score += 10;
+    scoreText.text = 'Score: ' + score;
+}
+
+function takegem4(player, gem4) {
+
+    gem4.kill();
+    score += 10;
+    scoreText.text = 'Score: ' + score;
+}
+
+function takegem5(player, gem5) {
+
+    gem5.kill();
+    score += 10;
+    scoreText.text = 'Score: ' + score;
+}
+
+function takegem6(player, gem6) {
+
+    gem6.kill();
+    score += 10;
+    scoreText.text = 'Score: ' + score;
+}
+function takegem7(player, gem7) {
+
+    gem7.kill();
+    score += 10;
+    scoreText.text = 'Score: ' + score;
+}
+function takegem8(player, gem8) {
+
+    gem8.kill();
+    score += 10;
+    scoreText.text = 'Score: ' + score;
+}
+function takegem9(player, gem9) {
+
+    gem9.kill();
+    score += 10;
+    scoreText.text = 'Score: ' + score;
+}
+function takegem10(player, gem10) {
+
+    gem10.kill();
+    score += 10;
+    scoreText.text = 'Score: ' + score;
+}
+
+
+function gateFinish(player, layerGate){
+    
+    player.kill();
+    
+}
+
+
+
+
