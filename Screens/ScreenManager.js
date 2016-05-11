@@ -14,7 +14,8 @@ var key;
 var score = 100;
 var scoreString = '';
 var scoreText;
-var monsters;
+var monster1;
+var monster2;
 
 
 function preload() {
@@ -87,23 +88,27 @@ function create() {
     
     //!!-- ENEMY --!!//
 
-    monsters = game.add.group();
-    monsters.enableBody = true;
 
+    monster1 = game.add.group();
+    monster1.enableBody = true;
+    monster1 = game.add.sprite(1024, 384, 'enemy');
+    monster1.animations.add('enemy', [1, 2, 0], 10, true);
+    monster1.animations.play('enemy');
+    game.physics.arcade.enable(monster1);
+    monster1.body.collideWorldBounds = true;
 
-    monsters = game.add.sprite(1024, 384, 'enemy');
+    /////////// enemy2
 
+    monster2 = game.add.group();
+    monster2.enableBody = true;
+    monster2 = game.add.sprite(1408, 384, 'enemy');
+    monster2.animations.add('enemy', [1, 2, 0], 10, true);
+    monster2.animations.play('enemy');
+    game.physics.arcade.enable(monster2);
+    monster2.body.collideWorldBounds = true;
 
+    ///////////////
 
-
-    monsters.animations.add('enemy', [2, 1, 0], 10, true);
-    monsters.animations.play('enemy');
-    game.physics.arcade.enable(monsters);
-    monsters.body.collideWorldBounds = true;
-    
-    
-
-    
     
     player = game.add.sprite(150, 200, 'player');
     
@@ -132,6 +137,11 @@ function create() {
     
     cursors = game.input.keyboard.createCursorKeys();
     
+   
+
+    game.add.tween(monster1).to({ y: 60 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
+    game.add.tween(monster2).to({ y: 60 }, 3000, Phaser.Easing.Linear.None, true, 0, 1000, true);
+
 
 }
 
@@ -140,7 +150,11 @@ function create() {
 
 function update() {
 
-        game.physics.arcade.collide(player, CollideLayer);
+    game.physics.arcade.collide(player, CollideLayer);
+    game.physics.arcade.overlap(player, key, takeKey, null, this);
+    game.physics.arcade.overlap(monster1, player, monsterkill1, null, this);
+    game.physics.arcade.overlap(monster2, player, monsterkill2, null, this);
+
     
 
     
@@ -215,9 +229,7 @@ function update() {
         
 
     }
-    game.physics.arcade.overlap(player, key, takeKey, null, this);
-
-
+    
 
 
 
@@ -235,3 +247,15 @@ function takeKey(player,key) {
 }
 
 
+function monsterkill1(monster1,player) {
+
+    player.kill();
+
+
+}
+function monsterkill2(monster2, player) {
+
+    player.kill();
+
+
+}
