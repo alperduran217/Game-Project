@@ -52,11 +52,25 @@ function create() {
     layer.resizeWorld();
     
     player = game.add.sprite(150, 200, 'player');
+    
+    
+    
     game.physics.arcade.enable(player);
     
     player.body.bounce.y = 0.2;
     player.body.gravity.y = 400;
     player.body.collideWorldBounds = true;
+    
+    
+    player.animations.add('left', [16,12,8,4,0], 15, true);
+    player.animations.add('right', [15,13,9,5,1], 15, true);
+    player.animations.add('stop', [3,3], 10, true);
+    player.animations.add('down', [11,11], 10, true);
+    player.animations.add('up', [10,6,2], 10, true);
+    player.animations.add('kick', [18,14], 15, true);
+    player.animations.add('top', [7,7], 15, true);
+
+    
     
     game.physics.enable(player, Phaser.Physics.ARCADE);
 
@@ -81,35 +95,46 @@ function update() {
 
         player.body.velocity.x = 250;
 
-       // player.animations.play('right');
+        player.animations.play('right');
     }
 
     else if (cursors.left.isDown) {
 
         player.body.velocity.x = -250;
 
-      //  player.animations.play('left');
+       player.animations.play('left');
+    }
+    
+    else if (cursors.down.isDown) {
+        
+        player.animations.play('down');
+
     }
 
 
-
+    
 
     else {
         //  Stand still
 
 
-       // player.animations.play('stop');
+        player.animations.play('stop');
 
 
 
     }
 
     //  Allow the player to jump if they are touching the ground.
-    if (cursors.up.isDown && player.body.onFloor()) {
+    if (cursors.up.isDown ) {
 
         player.body.velocity.y = -350;
+        
+        player.animations.play('up');
+        
        // jumpsound.play();
     }
+    
+    
 
 
 
