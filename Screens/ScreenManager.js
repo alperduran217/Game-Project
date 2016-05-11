@@ -11,6 +11,9 @@ var tileset;
 var tile;
 var layer2;
 var keys;
+var score = 100;
+var scoreString = '';
+var scoreText;
 
 
 function preload() {
@@ -55,15 +58,38 @@ function create() {
     
     layer.resizeWorld();
     
-    keys = game.add.sprite(256,192, 'key');
+    
+  //  The score
+    
+    
+    scoreString = 'Score : ';
+    scoreText = game.add.text(10, 10, scoreString + score, { font: '34px Arial', fill: '#fff' });
+    
+    
+    key = game.add.group();
+    key.enableBody = true;
+    
+    //!!-- KEYS --!!//
+    
+    keys = key.create(256,192, 'key');
     
     keys.visible = false;
     
+    game.physics.arcade.enable(keys);
+    
+    game.physics.enable(keys, Phaser.Physics.ARCADE);
+
+    
+    
+    
+    
+
+    
     player = game.add.sprite(150, 200, 'player');
     
-    
-    
     game.physics.arcade.enable(player);
+
+    
     
     player.body.bounce.y = 0.2;
     player.body.gravity.y = 400;
@@ -81,7 +107,7 @@ function create() {
     
     
     game.physics.enable(player, Phaser.Physics.ARCADE);
-
+    
     game.camera.follow(player);
     
     cursors = game.input.keyboard.createCursorKeys();
@@ -95,6 +121,9 @@ function create() {
 function update() {
 
         game.physics.arcade.collide(player, CollideLayer);
+    
+         game.physics.arcade.collide(player, keys,takeKey,null,this);
+
     
         player.body.velocity.x = 0;
     
@@ -162,12 +191,26 @@ function update() {
 
     
     
+    if (score == 100) {
+    keys.visible = true;
+        
+
+    }
+
+
+
+
+
+}
+
+
+function takeKey(player,keys) {
     
-
-
-
-
-
+   
+    keys.kill();
+    
+    
+    
 }
 
 
