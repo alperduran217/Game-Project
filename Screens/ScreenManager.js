@@ -16,6 +16,7 @@ var scoreString = '';
 var scoreText;
 var monster1;
 var monster2;
+var layer3;
 
 
 function preload() {
@@ -54,6 +55,7 @@ function create() {
     
     layer = map.createLayer('Background Colour');
     layer2 = map.createLayer('Background Pattern');
+    layer3 = map.createLayer('Lava');
     
     CollideLayer = map.createLayer('Foreground');
     
