@@ -9,6 +9,8 @@ var layer;
 var CollideLayer;
 var tileset;
 var tile;
+var layer2;
+var keys;
 
 
 function preload() {
@@ -19,6 +21,7 @@ function preload() {
     game.load.spritesheet('player', 'Assets/sprites.png', 64, 54);
     game.load.image('background2','Assets/Tilemaps/introLevelBackground_2.png');
     game.load.image('background1','Assets/Tilemaps/introLevelBackground_1.png');
+    game.load.image('key','Assets/keyGreen.png',29,30);
 
 
 
@@ -44,12 +47,17 @@ function create() {
 
     
     layer = map.createLayer('Background Colour');
+    layer2 = map.createLayer('Background Pattern');
     
     CollideLayer = map.createLayer('Foreground');
     
     map.setCollisionBetween(0, 200, true, CollideLayer);
     
     layer.resizeWorld();
+    
+    keys = game.add.sprite(256,192, 'key');
+    
+    keys.visible = false;
     
     player = game.add.sprite(150, 200, 'player');
     
@@ -66,7 +74,7 @@ function create() {
     player.animations.add('right', [15,13,9,5,1], 15, true);
     player.animations.add('stop', [3,3], 10, true);
     player.animations.add('down', [11,11], 10, true);
-    player.animations.add('up', [10,6,2], 10, true);
+    player.animations.add('jump', [10,6,2], 10, true);
     player.animations.add('kick', [18,14], 15, true);
     player.animations.add('top', [7,7], 15, true);
 
@@ -90,8 +98,37 @@ function update() {
     
         player.body.velocity.x = 0;
     
+    //  Allow the player to jump if they are touching the ground.
+     if (cursors.up.isDown  ) {
+         
+         
+        
+         if (player.body.onFloor())
+            {
+                player.body.velocity.y = -350;
+
+            }
+        else if (cursors.right.isDown) {
+
+        player.body.velocity.x = 250;
+
+    }
+         else if (cursors.left.isDown) {
+
+        player.body.velocity.x = -250;
+
+    }
+ 
+            else {
+            player.animations.play('jump');
+
+}
+        
+       // jumpsound.play();
+    }
+
     
-     if (cursors.right.isDown) {
+     else if (cursors.right.isDown) {
 
         player.body.velocity.x = 250;
 
@@ -113,7 +150,6 @@ function update() {
 
 
     
-
     else {
         //  Stand still
 
@@ -124,15 +160,7 @@ function update() {
 
     }
 
-    //  Allow the player to jump if they are touching the ground.
-    if (cursors.up.isDown ) {
-
-        player.body.velocity.y = -350;
-        
-        player.animations.play('up');
-        
-       // jumpsound.play();
-    }
+    
     
     
 
