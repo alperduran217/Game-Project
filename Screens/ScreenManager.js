@@ -14,6 +14,7 @@ var key;
 var score = 100;
 var scoreString = '';
 var scoreText;
+var monsters;
 
 
 function preload() {
@@ -22,6 +23,7 @@ function preload() {
     game.load.tilemap('introLevel', 'Assets/TileMaps/introLevel.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('tiles','Assets/Tilemaps/introLevelForeground.png');
     game.load.spritesheet('player', 'Assets/sprites.png', 64, 54);
+    game.load.spritesheet('enemy', 'Assets/enemybabe.png', 64, 43);
     game.load.image('background2','Assets/Tilemaps/introLevelBackground_2.png');
     game.load.image('background1','Assets/Tilemaps/introLevelBackground_1.png');
     game.load.image('key','Assets/keyGreen.png',29,30);
@@ -83,8 +85,25 @@ function create() {
     
     
     
+    //!!-- ENEMY --!!//
+
+    monsters = game.add.group();
+    monsters.enableBody = true;
+
+
+    monsters = game.add.sprite(1024, 384, 'enemy');
+
+
+
+
+    monsters.animations.add('enemy', [2, 1, 0], 10, true);
+    monsters.animations.play('enemy');
+    game.physics.arcade.enable(monsters);
+    monsters.body.collideWorldBounds = true;
+    
     
 
+    
     
     player = game.add.sprite(150, 200, 'player');
     
