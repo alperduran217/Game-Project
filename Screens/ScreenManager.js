@@ -10,7 +10,7 @@ var CollideLayer;
 var tileset;
 var tile;
 var layer2;
-var keys;
+var key;
 var score = 100;
 var scoreString = '';
 var scoreText;
@@ -64,20 +64,21 @@ function create() {
     
     scoreString = 'Score : ';
     scoreText = game.add.text(10, 10, scoreString + score, { font: '34px Arial', fill: '#fff' });
+    scoreText.fixedToCamera = true;
     
     
-    key = game.add.group();
-    key.enableBody = true;
+    
     
     //!!-- KEYS --!!//
+
+    keys = game.add.group();
+    keys.enableBody = true;
+   
+    key = keys.create(256, 192, 'key');
+    game.physics.arcade.enable(key);
+    key.body.collideWorldBounds = true;
     
-    keys = key.create(256,192, 'key');
-    
-    keys.visible = false;
-    
-    game.physics.arcade.enable(keys);
-    
-    game.physics.enable(keys, Phaser.Physics.ARCADE);
+    key.visible = false;
 
     
     
@@ -122,7 +123,6 @@ function update() {
 
         game.physics.arcade.collide(player, CollideLayer);
     
-         game.physics.arcade.collide(player, keys,takeKey,null,this);
 
     
         player.body.velocity.x = 0;
@@ -192,10 +192,11 @@ function update() {
     
     
     if (score == 100) {
-    keys.visible = true;
+    key.visible = true;
         
 
     }
+    game.physics.arcade.overlap(player, key, takeKey, null, this);
 
 
 
@@ -204,11 +205,12 @@ function update() {
 }
 
 
-function takeKey(player,keys) {
+function takeKey(player,key) {
     
    
-    keys.kill();
-    
+    key.kill();
+    score += 10;
+    scoreText.text = 'Score: ' + score;
     
     
 }
