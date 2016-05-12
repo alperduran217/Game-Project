@@ -32,6 +32,8 @@ var gem10;
 var layerGate;
 var stateText;
 var stateText2;
+var bgmusic;
+
 
 
 
@@ -47,6 +49,7 @@ function preload() {
     game.load.image('background1','Assets/Tilemaps/introLevelBackground_1.png');
     game.load.image('key','Assets/keyGreen.png',29,30);
     game.load.image('jew','Assets/jewel.png',24,22);
+    game.load.audio('backgroundmusic', 'Assets/Sounds/backgroundmusic.mp3');
 
     
 
@@ -93,6 +96,13 @@ function create() {
     layer.resizeWorld();
     
     
+    // musics
+    
+    bgmusic = game.add.audio('backgroundmusic');
+
+    bgmusic.play();
+    bgmusic.volume -= 0.5;
+    
   //  The score
     
     
@@ -106,7 +116,7 @@ function create() {
     stateText.visible = true;
     stateText.fixedToCamera = true;
     
-    stateText2 = game.add.text(650, 10, ' ', { font: '34px Arial', fill: '#fff' });
+    stateText2 = game.add.text(580, 10, ' ', { font: '34px Arial', fill: '#fff' });
     stateText2.visible = true;
     stateText2.fixedToCamera = true;
     
@@ -455,6 +465,8 @@ function update() {
     if (score == 100) {
     key.visible = true;
     
+            stateText2.text = " A wild key appeared \n ";
+    stateText2.visible = true;
  
     }
     
