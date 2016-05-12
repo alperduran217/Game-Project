@@ -30,6 +30,9 @@ var gem8;
 var gem9;
 var gem10;
 var layerGate;
+var stateText;
+var stateText2;
+
 
 
 
@@ -44,6 +47,7 @@ function preload() {
     game.load.image('background1','Assets/Tilemaps/introLevelBackground_1.png');
     game.load.image('key','Assets/keyGreen.png',29,30);
     game.load.image('jew','Assets/jewel.png',24,22);
+
     
 
 
@@ -96,7 +100,15 @@ function create() {
     scoreText = game.add.text(10, 10, scoreString + score, { font: '34px Arial', fill: '#fff' });
     scoreText.fixedToCamera = true;
     
+    // text
     
+    stateText = game.add.text(150, 220, ' ', { font: '84px Arial', fill: '#fff' });
+    stateText.visible = true;
+    stateText.fixedToCamera = true;
+    
+    stateText2 = game.add.text(650, 10, ' ', { font: '34px Arial', fill: '#fff' });
+    stateText2.visible = true;
+    stateText2.fixedToCamera = true;
     
     
     //!!-- KEYS --!!//
@@ -458,6 +470,9 @@ function takeKey(player,key) {
     key.kill();
     score += 100;
     scoreText.text = 'Score: ' + score;
+    stateText2.text = " You've got the key \n ";
+    stateText2.visible = true;
+
     
     
 }
@@ -466,24 +481,36 @@ function takeKey(player,key) {
 function monsterkill1(monster1,player) {
 
     player.kill();
+    stateText.text = " GAME OVER \n ";
+    stateText.visible = true;
+
 
 
 }
 function monsterkill2(monster2, player) {
 
     player.kill();
+    stateText.text = " GAME OVER \n ";
+    stateText.visible = true;
+
 
 
 }
 function monsterkill3(monster3, player) {
 
     player.kill();
+    stateText.text = " GAME OVER \n ";
+    stateText.visible = true;
+
 
 
 }
 function monsterkill4(monster4, player) {
 
     player.kill();
+    stateText.text = " GAME OVER \n ";
+    stateText.visible = true;
+
 
 
 }
@@ -492,6 +519,9 @@ function monsterkill4(monster4, player) {
 function lavaKill(player, layerLava) {
 
     player.kill();
+    stateText.text = " GAME OVER \n ";
+    stateText.visible = true;
+
 
 
 }
@@ -565,6 +595,9 @@ function gateFinish(player, layerGate){
     
     player.kill();
     
+    stateText.text = " The End \n ";
+    stateText.visible = true;
+
 }
 
 
